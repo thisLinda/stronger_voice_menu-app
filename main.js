@@ -1,31 +1,7 @@
-class Player {
-  constructor(name) {
-    this.name = name;
-    // this.position = position;
-  }
-
-  describe() {
-    return `Welcome ${this.name}`;
-  }
-}
-
 class User {
   constructor(name) {
     this.name = name;
-    // array to hold added teams
-    this.players = [];
-  }
-
-  addPlayer(player) {
-    if (player instanceof Player) {
-      this.players.push(player);
-    } else {
-      throw new Error(`You can only add an instance of Player. Argument is not a player: ${player}`);
-    }
-  }
-
-  describe() {
-    return `${this.name} has players.`;
+    this.newUsers = [];
   }
 }
 
@@ -56,11 +32,13 @@ class Menu {
       selection = this.showMainMenuOptions();
     }
 
-    alert('SeeYouse!');
+    alert('Daily practice will improve your voice!');
   }
 
   showMainMenuOptions() {
+    // ToDo: add user menu
     return prompt(`
+    Admin menu:
       0) exit
       1) create new user
       2) view user
@@ -72,14 +50,15 @@ class Menu {
   showUserMenuOptions(userInfo) {
     return prompt(`
       0) go back
-      --------------------------
+      -----------
       ${userInfo}
     `);
   }
 
   createUser() {
     let name = prompt('Enter name for new user:');
-    let registrationDate = prompt('Enter today\'s date in this format: MM/DD.')
+    // ToDo: code for entry of accurate date
+    // let registrationDate = prompt('Enter today\'s date in this format: MM/DD.')
     this.users.push(new User(name));
   }
 
@@ -89,29 +68,22 @@ class Menu {
     if (index > -1 && index < this.users.length) {
       this.selectedUser = this.users[index];
       let description = 'User Name: ' + this.selectedUser.name + '\n';
-      for (let i = 0; i < this.selectedUser.players.length; i++) {
-        description += i + ') ' + this.selectedUser.players[i].name
-          + ' - ' + this.selectedUser.players[i].position + '\n';
+      for (let i = 0; i < this.selectedUser.newUsers.length; i++) {
+        description += i + ') ' + this.selectedUser.newUsers[i].name + '\n';
       }
       let selection = this.showUserMenuOptions(description);
-      switch (selection) {
-        case '1':
-          this.createAnotherUser();
-          break;
-        case '2':
-          this.deletePlayer();
-      }
     }
   }
 
   deleteUser() {
     let index = prompt('Enter the index of the user you wish to delete:');
     if (index > -1 && index < this.users.length) {
-      this.users. splice(index, 1);
+      this.users.splice(index, 1);
     }
   }
 
 // this code shows all the users
+  // ToDo: HIPAA, need separate admin and user
   displayUsers() {
     let userString = '';
     for (let i = 0; i < this.users.length; i++) {
