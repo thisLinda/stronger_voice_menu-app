@@ -1,97 +1,144 @@
 class User {
   constructor(name) {
     this.name = name;
-    this.newUsers = [];
+  }
+
+  userTarget() {
+    this.target = target;
+    this.allTargets = [];
+  }
+
+  confirm() {
+      return `Welcome ${this.name}--let's exercise your voice!`;
   }
 }
 
 class Menu {
   constructor() {
-    this.users = [];
-    this.selectedUser = null;
+    this.viewTarget = [];
+    this.selectedTarget = null;
   }
+
   start() {
     let selection = this.showMainMenuOptions();
     while (selection != 0) {
       switch (selection) {
         case '1':
-          this.createUser();
+          this.addUser();
           break;
         case '2':
-          this.viewUser();
+          this.addProgram();
           break;
         case '3':
-          this.deleteUser();
+          this.modifyProgram();
           break;
         case '4':
-          this.displayUsers();
+          this.viewUsers();
+          break;
+        case '5':
+          this.deleteProgram();
+          break;
+        case '6':
+          this.deleteUser();
           break;
         default:
           selection = 0;
       }
       selection = this.showMainMenuOptions();
     }
-
-    alert('Daily practice will improve your voice!');
+    alert('Regular practice pays off!');
   }
 
   showMainMenuOptions() {
-    // ToDo: add user menu
     return prompt(`
-    Admin menu:
-      0) exit
-      1) create new user
-      2) view user
-      3) delete user
-      4) display all users
+    What would you like to do?
+      0) Exit
+      1) Add yourself as a user
+      2) Choose your therapy targets
+      3) View your program
+      4) View users
+      5) Delete your program
+      6) Delete user
     `);
   }
 
-  showUserMenuOptions(userInfo) {
+  showUserTherapyTargets(targetInfo) {
     return prompt(`
-      0) go back
-      -----------
-      ${userInfo}
+    Choose your therapy target(s).
+      0) Go back
+      1) Add loudness exercises [ToDo]
+      2) Add duration exercises [ToDo]
+      3) Add pitch exercises [ToDo]
     `);
   }
 
-  createUser() {
-    let name = prompt('Enter name for new user:');
+  addUser() {
+    let name = prompt('Enter your first name as a new user:');
     // ToDo: code for entry of accurate date
     // let registrationDate = prompt('Enter today\'s date in this format: MM/DD.')
-    this.users.push(new User(name));
+    this.viewTarget.push(new User(name));
   }
 
-// this code displays the individual user
-  viewUser() {
-    let index = prompt('Enter the index of the user you wish to view:');
-    if (index > -1 && index < this.users.length) {
-      this.selectedUser = this.users[index];
-      let description = 'User Name: ' + this.selectedUser.name + '\n';
-      for (let i = 0; i < this.selectedUser.newUsers.length; i++) {
-        description += i + ') ' + this.selectedUser.newUsers[i].name + '\n';
+  addProgram() {
+    let selection = this.showUserTherapyTargets();
+      switch (selection) {
+        case '1':
+          this.addLoudness();
+          break;
+        case '2':
+          this.addDuration();
+          break;
+        case '3':
+          this.addPitch();
+          break;
       }
-      let selection = this.showUserMenuOptions(description);
+  }
+
+  addLoudness() {
+    alert ('Loudness Exercises [ToDo]');
+    this.allTargets.push(new User(target));
+  }
+
+  addDuration() {
+    alert ('Duration Exercises [ToDo]');
+    this.allTargets.push(new User(target));
+  }
+
+  addPitch() {
+    alert ('Pitch Exercise [ToDo]');
+    this.allTargets.push(new User(target));
+  }
+
+  displayTargets() {
+    let userString = '';
+    for (let i = 0; i < this.allTargets.length; i++) {
+      userString += i + ') ' + this.allTargets[i].target + '\n';
+    }
+    alert(userString);
+  }
+
+  viewUsers() {
+    let userString = '';
+    for (let i = 0; i < this.viewTarget.length; i++) {
+      userString += i + ') ' + this.viewTarget[i].name + '\n';
+    }
+    alert(userString);
+  }
+
+  deleteProgram() {
+    let index = prompt('Enter the index of the voice target to delete:');
+        if (index > -1 && index < this.allTargets.length) {
+          this.allTargets.splice(index, 1);
     }
   }
 
   deleteUser() {
     let index = prompt('Enter the index of the user you wish to delete:');
-    if (index > -1 && index < this.users.length) {
-      this.users.splice(index, 1);
+    if (index > -1 && index < this.viewTarget.length) {
+      this.viewTarget.splice(index, 1);
     }
-  }
-
-// this code shows all the users
-  // ToDo: HIPAA, need separate admin and user
-  displayUsers() {
-    let userString = '';
-    for (let i = 0; i < this.users.length; i++) {
-      userString += i + ') ' + this.users[i].name + '\n';
-    }
-    alert(userString);
   }
 }
 
-let menu = new Menu();
-menu.start();
+let myMenu = new Menu();
+myMenu.start();
